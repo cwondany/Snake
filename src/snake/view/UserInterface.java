@@ -5,6 +5,7 @@
  */
 package snake.view;
 
+import java.awt.BorderLayout;
 import snake.control.KeyboardListener;
 import snake.control.Updatable;
 import java.awt.Container;
@@ -23,6 +24,7 @@ public class UserInterface implements Runnable {
     private GameController game;
     private int sideLength;
     private DrawingBoard board;
+    private SidePanel sidePanel;
 
     public UserInterface(GameController game, int sideLength) {
         this.game = game;
@@ -32,31 +34,36 @@ public class UserInterface implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("Snake");
-        int width = (game.getWidth() + 1) * sideLength + 10;
-        int height = (game.getHeight() + 2) * sideLength + 10;
+        frame.setLayout(new BorderLayout());
 
-        frame.setPreferredSize(new Dimension(width, height));
+        int width = ((game.getWidth() + 1) * sideLength)+10 ;
+        int height = ((game.getHeight() + 1) * sideLength)+110 ;
 
+        frame.setPreferredSize(new Dimension(height, width));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+        sidePanel = new SidePanel(game);
+        frame.add(sidePanel, BorderLayout.EAST);
+        
         createComponents(frame.getContentPane());
+         board = new DrawingBoard(game, sideLength);
+        frame.add(board,BorderLayout.CENTER);
+
 
         frame.pack();
+        frame.repaint();
         frame.setVisible(true);
 
     }
 
-    private void createComponents(Container container) {
-        board = new DrawingBoard(game, sideLength);
-        container.add(board);
-        KeyboardListener k = new KeyboardListener(game.getWorm());
+    private void createComponents(Container container) { 
+        KeyboardListener k = new KeyboardListener(game.getWorm(),game);
         getFrame().addKeyListener(k);
     }
-
     public JFrame getFrame() {
         return frame;
     }
-     public Updatable getUpdatable() {
+
+    public Updatable getUpdatable() {
         return board;
     }
 

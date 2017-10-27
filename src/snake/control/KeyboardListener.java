@@ -14,19 +14,20 @@ import java.awt.event.KeyListener;
 import snake.model.Direction;
 import snake.model.Snake;
 
- 
 public class KeyboardListener implements KeyListener {
- 
+
     private Snake worm;
- 
-    public KeyboardListener(Snake worm) {
+    private GameController game;
+
+    public KeyboardListener(Snake worm, GameController game) {
         this.worm = worm;
+        this.game = game;
     }
- 
+
     @Override
     public void keyTyped(KeyEvent ke) {
     }
- 
+
     @Override
     public void keyPressed(KeyEvent ke) {
         if (ke.getKeyCode() == KeyEvent.VK_UP) {
@@ -41,8 +42,9 @@ public class KeyboardListener implements KeyListener {
         if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
             worm.setDirection(Direction.LEFT);
         }
+
     }
- 
+
     @Override
     public void keyReleased(KeyEvent ke) {
     }

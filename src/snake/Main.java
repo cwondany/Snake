@@ -7,8 +7,6 @@ package snake;
 
 import snake.control.GameController;
 import javax.swing.SwingUtilities;
-import snake.model.Direction;
-import snake.model.Snake;
 import snake.view.UserInterface;
 
 /**
@@ -23,7 +21,7 @@ public class Main {
    
         GameController game = new GameController(20, 20);
  
-        UserInterface ui = new UserInterface(game, 20);
+        UserInterface ui = new UserInterface(game, 30);
         SwingUtilities.invokeLater(ui);
  
         while (ui.getUpdatable() == null) {
